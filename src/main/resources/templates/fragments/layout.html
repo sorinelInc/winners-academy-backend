@@ -1,36 +1,21 @@
-<!doctype html>
-<html th:fragment="layout (template, menu)">
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Java Getting Started on Heroku</title>
-    <link rel="stylesheet" type="text/css" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/stylesheets/main.css"/>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}"/>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}"/>
+
+    <title layout:title-pattern="$LAYOUT_TITLE - $CONTENT_TITLE">Spring Security Thymeleaf</title>
 </head>
-
 <body>
-<nav class="navbar navbar-default navbar-static-top navbar-inverse">
+    <th:block th:replace="fragments/header :: header"/>
     <div class="container">
-        <ul class="nav navbar-nav">
-            <li class="active">
-                <a href="/"><span class="glyphicon glyphicon-home"></span> Home</a>
-            </li>
-            <li>
-                <a href="https://devcenter.heroku.com/articles/how-heroku-works"><span
-                        class="glyphicon glyphicon-user"></span> How Heroku Works</a>
-            </li>
-        </ul>
-        <ul class="nav navbar-nav navbar-right">
-            <li class="navbar-right">
-                <a href="/defect-details"><span class="glyphicon glyphicon-user"></span> Login</a>
-            </li>
-            <li class="navbar-right">
-                <a href="/defect-details"><span class="glyphicon glyphicon-comment"></span> Contact</a>
-            </li>
-        </ul>
+        <th:block layout:fragment="content"/>
     </div>
-</nav>
-<div th:replace="${template}"/>
-
-<script th:src="@{/webjars/jquery/jquery.min.js}"></script>
-<script th:src="@{/webjars/jquery-ui/jquery-ui.min.js}"></script>
-<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <th:block th:replace="fragments/footer :: footer"/>
 </body>
+</html>
