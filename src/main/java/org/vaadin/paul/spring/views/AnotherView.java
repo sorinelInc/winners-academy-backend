@@ -6,14 +6,14 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
-@Route(value = "company")
+@Route(value = "another")
 @PageTitle("Company")
 public class AnotherView extends VerticalLayout {
 
     private final Button addNewBtn;
 
-    public AnotherView(){
-        this.addNewBtn = new Button("New employee",VaadinIcon.PLUS.create());
+    public AnotherView() {
+        this.addNewBtn = new Button("New employee", VaadinIcon.PLUS.create());
         add(addNewBtn);
     }
 
