@@ -17,8 +17,10 @@ public class LoginView extends VerticalLayout {
     public LoginView(){
         login.setAction("login");
         login.setOpened(true);
-        login.setTitle("Spring Secured Vaadin");
-        login.setDescription("Login Overlay Example");
+        login.setTitle("Winners Street");
+        login.setDescription("Login to app");
+        login.getElement().setAttribute("no-forgot-password", true);
         getElement().appendChild(login.getElement());
+
     }
 }

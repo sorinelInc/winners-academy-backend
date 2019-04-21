@@ -1,6 +1,6 @@
 package org.vaadin.paul.spring.model;
 
-public enum  Outcome {
+public enum Result {
 
     WON,
 

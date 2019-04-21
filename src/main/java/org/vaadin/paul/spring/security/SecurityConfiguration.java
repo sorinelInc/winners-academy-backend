@@ -10,6 +10,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
+import org.vaadin.paul.spring.utils.Role;
 
 /**
  * Configures spring security, doing the following:
@@ -44,7 +45,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 				// Allow all flow internal requests.
 				.requestMatchers(SecurityUtils::isFrameworkInternalRequest).permitAll()
-
+				.antMatchers("/company/**").permitAll()
+				.antMatchers("/daily/**").permitAll()
 				// Allow all requests by logged in users.
 				.anyRequest().authenticated()
 
@@ -62,10 +64,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		UserDetails user =
 				User.withUsername("user")
 						.password("{noop}password")
-						.roles("USER")
+						.roles(Role.USER)
 						.build();
 
-		return new InMemoryUserDetailsManager(user);
+		UserDetails admin =
+				User.withUsername("admin")
+						.password("{noop}admin")
+						.roles(Role.ADMIN)
+						.build();
+
+
+		return new InMemoryUserDetailsManager(user, admin);
 	}
 
 	/**
