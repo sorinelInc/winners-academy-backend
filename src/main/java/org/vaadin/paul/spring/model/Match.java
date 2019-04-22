@@ -2,10 +2,7 @@ package org.vaadin.paul.spring.model;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.sql.Date;
 
 @Entity
@@ -18,6 +15,7 @@ import java.sql.Date;
 public class Match {
 
     @Id
+    @GeneratedValue
     private Long matchId;
 
     @Column
@@ -34,5 +32,8 @@ public class Match {
 
     @Column
     private Result result;
+
+    @ManyToOne
+    private Ticket parentTicket;
 
 }

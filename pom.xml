@@ -73,6 +73,20 @@
             <version>2.93.0</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.appreciated</groupId>
+            <artifactId>app-layout-addon</artifactId>
+            <version>3.0.0.beta2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.vaadin.jonni</groupId>
+            <artifactId>payment-request-addon</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+
+
+
     </dependencies>
 
     <dependencyManagement>

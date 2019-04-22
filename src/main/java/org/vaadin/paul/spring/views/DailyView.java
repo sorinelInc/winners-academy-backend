@@ -11,6 +11,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import org.vaadin.paul.spring.model.Match;
 import org.vaadin.paul.spring.model.Ticket;
+import org.vaadin.paul.spring.views.matches.TestDiv;
 
 import java.sql.Date;
 import java.time.LocalDate;
@@ -22,13 +23,8 @@ import java.util.stream.Stream;
 @PageTitle("Daily Matches")
 public class DailyView extends VerticalLayout {
 
-
     public DailyView() {
-
         VerticalLayout layout = new VerticalLayout();
-
-        VerticalLayout footer = new VerticalLayout();
-
         LocalDate today = LocalDate.now();
 
         Tab tab1 = new Tab(today.toString());
@@ -94,9 +90,6 @@ public class DailyView extends VerticalLayout {
         layout.add();
         layout.add(tabs, pages);
         add(layout);
-//        add(tabs, pages);
-//        tabs.setFlexGrowForEnclosedTabs(1);
-
 
     }
 

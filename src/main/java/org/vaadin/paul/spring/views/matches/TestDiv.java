@@ -1,9 +1,12 @@
-package org.vaadin.paul.spring.views;
+package org.vaadin.paul.spring.views.matches;
 
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
+import com.vaadin.flow.component.html.Label;
+import com.vaadin.flow.component.orderedlayout.FlexComponent;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import org.vaadin.paul.spring.model.Person;
 import org.vaadin.paul.spring.model.Result;
 
@@ -11,7 +14,7 @@ import java.sql.Date;
 import java.util.Arrays;
 import java.util.List;
 
-public class TestDiv extends Div {
+public class TestDiv extends VerticalLayout {
 
     private Grid<Person> grid = new Grid<>();
 
@@ -33,7 +36,14 @@ public class TestDiv extends Div {
         grid.addColumn(person -> Double.toString(person.getOdds())).setHeader("Odds");
         grid.addColumn(Person::getResult).setHeader("Result");
 
-        add(refresh, grid);
+        Label totalOdds = new Label("Total Odds:");
+        totalOdds.add();
+        setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, totalOdds);
+
+        Label result = new Label("Result: ");
+        setHorizontalComponentAlignment(FlexComponent.Alignment.CENTER, result);
+
+        add(refresh, grid, totalOdds, result);
     }
 
     public void update() {

@@ -17,6 +17,7 @@ import java.util.List;
 public class Ticket {
 
     @Id
+    @GeneratedValue
     private Long ticketId;
 
     @Column
@@ -32,5 +33,10 @@ public class Ticket {
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<Match> matchList = new ArrayList<>();
+
+    public void addMatch(Match newMatch){
+        matchList.add(newMatch);
+        newMatch.setParentTicket(this);
+    }
 
 }
