@@ -16,7 +16,7 @@ public class MainView extends AppLayoutRouterLayout {
                 .get(Behaviour.LEFT_RESPONSIVE_HYBRID)
                 .withTitle(new H1("Winners bet"))
                 .withAppMenu(LeftAppMenuBuilder.get()
-                        .add(new LeftNavigationItem("Home", VaadinIcon.HOME.create(), DailyView.class))
+                        .add(new LeftNavigationItem("Home", VaadinIcon.HOME.create(), HomeView.class))
                         .add(new LeftNavigationItem("Daily Matches", VaadinIcon.WALLET.create(), DailyView.class))
                         .add(new LeftNavigationItem("VIP Matches", VaadinIcon.STAR.create(), VIPView.class))
                         .add(new LeftNavigationItem("Register", VaadinIcon.PLUS.create(), PaymentView.class))
