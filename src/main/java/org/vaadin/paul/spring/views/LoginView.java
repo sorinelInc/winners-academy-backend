@@ -24,7 +24,7 @@ public class LoginView extends VerticalLayout {
         login.setAction("login");
         login.setForgotPasswordButtonVisible(false);
         login.setOpened(true);
-        login.setTitle("Winners Street");
+        login.setTitle("Winners Academy");
 
         login.setDescription("Login to VIP section");
         getElement().appendChild(login.getElement());
