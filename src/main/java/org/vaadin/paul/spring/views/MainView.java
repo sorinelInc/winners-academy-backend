@@ -19,6 +19,7 @@ public class MainView extends AppLayoutRouterLayout {
                         .add(new LeftNavigationItem("Home", VaadinIcon.HOME.create(), DailyView.class))
                         .add(new LeftNavigationItem("Daily Matches", VaadinIcon.WALLET.create(), DailyView.class))
                         .add(new LeftNavigationItem("VIP Matches", VaadinIcon.STAR.create(), VIPView.class))
+                        .add(new LeftNavigationItem("Register", VaadinIcon.PLUS.create(), PaymentView.class))
                         .add(new LeftNavigationItem("Contact", VaadinIcon.CONNECT.create(), DailyView.class))
                         .build())
                 .build());

@@ -46,7 +46,7 @@ public class TicketView extends VerticalLayout {
         grid.setColumns("ticketId", "date", "totalOdds");
         grid.getColumnByKey("ticketId").setWidth("50px").setFlexGrow(0);
 
-        filter.setPlaceholder("Filter by last name");
+        filter.setPlaceholder("Filter ticket date");
 
         // Hook logic to components
 

@@ -1,25 +1,23 @@
 package org.vaadin.paul.spring.views;
 
 import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.data.provider.ListDataProvider;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import org.vaadin.paul.spring.model.Match;
-import org.vaadin.paul.spring.model.Ticket;
-import org.vaadin.paul.spring.views.matches.TestDiv;
+import org.vaadin.paul.spring.utils.Routes;
+import org.vaadin.paul.spring.views.matches.SecondPage;
 
-import java.sql.Date;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-@Route(value = "daily",  layout = MainView.class)
+@Route(value = Routes.DAILY, layout = MainView.class)
 @PageTitle("Daily Matches")
 public class DailyView extends VerticalLayout {
 
@@ -38,7 +36,7 @@ public class DailyView extends VerticalLayout {
         Div page1 = new Div();
         page1.setText("Page#1");
 
-        TestDiv page2 = new TestDiv();
+        SecondPage page2 = new SecondPage();
         page2.setVisible(false);
 
         Div page3 = new Div();
@@ -71,9 +69,8 @@ public class DailyView extends VerticalLayout {
         tabsToPages.put(tab7, page7);
         Tabs tabs = new Tabs(tab1, tab2, tab3, tab4, tab5, tab6, tab7);
         Div pages = new Div(page1, page2, page3, page4, page5, page6, page7);
-        Set<Component> pagesShown = Stream.of(page1)
-                .collect(Collectors.toSet());
 
+        Set<Component> pagesShown = Stream.of(page1).collect(Collectors.toSet());
         tabs.addSelectedChangeListener(event -> {
             pagesShown.forEach(page -> page.setVisible(false));
             pagesShown.clear();
@@ -90,38 +87,5 @@ public class DailyView extends VerticalLayout {
         layout.add();
         layout.add(tabs, pages);
         add(layout);
-
     }
-
-
-    private Grid<Ticket> createTicketGrid() {
-        Grid<Ticket> grid = new Grid<>();
-        grid.addColumn(Ticket::getDate).setHeader("Ticket Date")
-                .setWidth("160px");
-        grid.addColumn(Ticket::getTotalOdds).setHeader("Total Odds");
-        grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        return grid;
-    }
-
-
-    private ListDataProvider<Ticket> createTicketDataProvider() {
-        List<Ticket> data = new ArrayList<>();
-
-        data.add(Ticket.builder().date(new Date(System.currentTimeMillis()))
-                .totalOdds(3.45D)
-                .matchList(new ArrayList<>(Arrays.asList(Match.builder()
-                        .name("Frosinone")
-                        .build())))
-                .build());
-        data.add(Ticket.builder().date(new Date(System.currentTimeMillis()))
-                .totalOdds(55.63)
-                .matchList(new ArrayList<>(Arrays.asList(Match.builder()
-                        .name("Fregamo")
-                        .build())))
-                .build());
-
-
-        return new ListDataProvider<>(data);
-    }
-
 }

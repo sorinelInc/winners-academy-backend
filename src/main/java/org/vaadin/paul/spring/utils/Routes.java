@@ -7,4 +7,6 @@ public interface Routes {
     String USERS = "users";
 
     String TICKET = "tickets";
+
+    String DAILY = "daily";
 }
