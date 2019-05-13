@@ -11,7 +11,7 @@ import java.sql.Date;
 @Builder
 @NoArgsConstructor
 @Entity
-public class Match2 {
+public class Match {
 
     @Id
     @GeneratedValue

@@ -52,29 +52,29 @@ public class TicketView extends VerticalLayout {
 
         // Replace listing with filtered content when user changes filter
         filter.setValueChangeMode(ValueChangeMode.EAGER);
-        filter.addValueChangeListener(e -> listCustomers(e.getValue()));
+        filter.addValueChangeListener(e -> listMatches(e.getValue()));
 
         // Connect selected Customer to editor or hide if none is selected
         grid.asSingleSelect().addValueChangeListener(e -> {
-            editor.editCustomer(e.getValue());
+            editor.editTicket(e.getValue());
         });
 
         // Instantiate and edit new Customer the new button is clicked
-        addNewBtn.addClickListener(e -> editor.editCustomer(new Ticket()));
+        addNewBtn.addClickListener(e -> editor.editTicket(new Ticket()));
 
         // Listen changes made by the editor, refresh data from backend
         editor.setChangeHandler(() -> {
             editor.setVisible(false);
-            listCustomers(filter.getValue());
+            listMatches(filter.getValue());
         });
 
         // Initialize listing
-        listCustomers(null);
+        listMatches(null);
 
     }
 
 
-    void listCustomers(String filterText) {
+    void listMatches(String filterText) {
         if (StringUtils.isEmpty(filterText)) {
             grid.setItems(ticketRepository.findAll());
         } else {

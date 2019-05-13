@@ -7,7 +7,10 @@ import com.vaadin.flow.component.tabs.Tab;
 import com.vaadin.flow.component.tabs.Tabs;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.vaadin.paul.spring.repository.TicketRepository;
 import org.vaadin.paul.spring.utils.Routes;
+import org.vaadin.paul.spring.views.matches.FirstPage;
 import org.vaadin.paul.spring.views.matches.SecondPage;
 
 import java.time.LocalDate;
@@ -21,7 +24,11 @@ import java.util.stream.Stream;
 @PageTitle("Daily Matches")
 public class DailyView extends VerticalLayout {
 
-    public DailyView() {
+    private TicketRepository ticketRepository;
+
+    @Autowired
+    public DailyView(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
         VerticalLayout layout = new VerticalLayout();
         LocalDate today = LocalDate.now();
 
@@ -33,10 +40,10 @@ public class DailyView extends VerticalLayout {
         Tab tab6 = new Tab(today.minusDays(5).toString());
         Tab tab7 = new Tab(today.minusDays(6).toString());
 
-        Div page1 = new Div();
-        page1.setText("Page#1");
+        FirstPage page1 = new FirstPage(ticketRepository);
+        page1.setVisible(true);
 
-        SecondPage page2 = new SecondPage();
+        SecondPage page2 = new SecondPage(ticketRepository);
         page2.setVisible(false);
 
         Div page3 = new Div();
@@ -78,6 +85,9 @@ public class DailyView extends VerticalLayout {
             selectedPage.setVisible(true);
             if (selectedPage.equals(page2)) {
                 page2.update();
+            }
+            else if(selectedPage.equals(page1)){
+                page1.update();
             }
             pagesShown.add(selectedPage);
         });

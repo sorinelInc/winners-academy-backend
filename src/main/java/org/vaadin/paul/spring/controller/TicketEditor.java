@@ -3,6 +3,8 @@ package org.vaadin.paul.spring.controller;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.datepicker.DatePicker;
+import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -10,18 +12,25 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.vaadin.paul.spring.model.Match;
 import org.vaadin.paul.spring.model.Ticket;
 import org.vaadin.paul.spring.repository.TicketRepository;
+
+import java.time.LocalDate;
 
 @Controller
 public class TicketEditor extends VerticalLayout implements KeyNotifier {
 
     private final TicketRepository repository;
 
-    private Ticket customer;
+    private Ticket currentTicket;
 
-    TextField firstName = new TextField("First name");
-    TextField lastName = new TextField("Last name");
+    TextField id = new TextField("Match Id");
+    TextField date = new TextField("Date");
+//    DatePicker datePicker = new DatePicker();
+    Grid<Match> matchGrid = new Grid<>(Match.class);
+
+    TextField totalOdds = new TextField("Total Odds");
 
 
     Button save = new Button("Save", VaadinIcon.CHECK.create());
@@ -36,9 +45,16 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
     public TicketEditor(TicketRepository repository) {
         this.repository = repository;
 
-        add(firstName, lastName, actions);
+        add(id, matchGrid, totalOdds, matchGrid, actions);
 
         // bind using naming convention
+//        binder.forMemberField(date)
+//                .withConverter(str -> LocalDate.now(), date -> LocalDate.now())
+//                .bind(Ticket::getDate, Ticket::setDate);
+//        binder.forMemberField(id)
+//                .withConverter(str -> str, date -> date);
+//        binder.forField(totalOdds).bind(Ticket::getStatus, Ticket::setStatus);
+
 //        binder.bindInstanceFields(this);
 
         // Configure and style components
@@ -52,17 +68,17 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
         // wire action buttons to save, delete and reset
         save.addClickListener(e -> save());
         delete.addClickListener(e -> delete());
-        cancel.addClickListener(e -> editCustomer(customer));
+        cancel.addClickListener(e -> editTicket(currentTicket));
         setVisible(false);
     }
 
     void delete() {
-        repository.delete(customer);
+        repository.delete(currentTicket);
         changeHandler.onChange();
     }
 
     void save() {
-        repository.save(customer);
+        repository.save(currentTicket);
         changeHandler.onChange();
     }
 
@@ -70,30 +86,33 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
         void onChange();
     }
 
-    public final void editCustomer(Ticket c) {
-        if (c == null) {
+    public final void editTicket(Ticket ticket) {
+        if (ticket == null) {
             setVisible(false);
             return;
         }
-        final boolean persisted = c.getTicketId() != null;
+        final boolean persisted = ticket.getTicketId() != null;
         if (persisted) {
             // Find fresh entity for editing
-            customer = repository.findById(c.getTicketId()).get();
+            currentTicket = repository.findById(ticket.getTicketId()).get();
         }
         else {
-            customer = c;
+            currentTicket = ticket;
         }
         cancel.setVisible(persisted);
 
-        // Bind customer properties to similarly named fields
+        // Bind currentTicket properties to similarly named fields
         // Could also use annotation or "manual binding" or programmatically
         // moving values from fields to entities before saving
-        binder.setBean(customer);
+
+        matchGrid.setItems(currentTicket.getMatchList());
+        binder.setBean(currentTicket);
+
 
         setVisible(true);
 
         // Focus first name initially
-        firstName.focus();
+        date.focus();
     }
 
     public void setChangeHandler(ChangeHandler h) {

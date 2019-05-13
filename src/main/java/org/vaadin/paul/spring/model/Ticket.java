@@ -30,7 +30,7 @@ public class Ticket {
     @Column
     private Date date;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @Builder.Default
     private List<Match> matchList = new ArrayList<>();
 

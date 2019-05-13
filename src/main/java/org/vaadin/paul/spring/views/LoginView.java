@@ -1,7 +1,6 @@
 package org.vaadin.paul.spring.views;
 
 import com.vaadin.flow.component.Tag;
-import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.login.LoginI18n;
 import com.vaadin.flow.component.login.LoginOverlay;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -14,7 +13,7 @@ import org.vaadin.paul.spring.utils.Routes;
 @PageTitle("Login")
 public class LoginView extends VerticalLayout {
 
-    public LoginView(){
+    public LoginView() {
 
         LoginOverlay login = new LoginOverlay();
 
