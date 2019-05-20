@@ -1,4 +1,4 @@
-package org.vaadin.paul.spring.views;
+package org.vaadin.paul.spring.view;
 
 
 import com.vaadin.flow.component.button.Button;
@@ -19,7 +19,9 @@ import org.vaadin.paul.spring.utils.Routes;
 
 @Route(value = Routes.TICKET, layout = MainView.class)
 @PageTitle("Tickets")
+
 public class TicketView extends VerticalLayout {
+//public class TicketView extends VerticalLayout {
 
     private final TicketRepository ticketRepository;
 
@@ -31,6 +33,9 @@ public class TicketView extends VerticalLayout {
 
     private final Button addNewBtn;
 
+    private final Button deleteNewBtn;
+
+
     @Autowired
     public TicketView(TicketRepository ticketRepository, TicketEditor editor) {
         this.ticketRepository = ticketRepository;
@@ -38,8 +43,10 @@ public class TicketView extends VerticalLayout {
         grid = new Grid<>(Ticket.class);
         filter = new TextField();
         addNewBtn = new Button("New Ticket", VaadinIcon.PLUS.create());
+        deleteNewBtn = new Button("Delete Ticket", VaadinIcon.TRASH.create());
+        deleteNewBtn.getElement().getThemeList().add("error");
 
-        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn);
+        HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, deleteNewBtn);
         add(actions, grid, editor);
 
         grid.setHeight("300px");
@@ -61,6 +68,7 @@ public class TicketView extends VerticalLayout {
 
         // Instantiate and edit new Customer the new button is clicked
         addNewBtn.addClickListener(e -> editor.editTicket(new Ticket()));
+        deleteNewBtn.addClickListener(e -> editor.deleteTicket(grid.getSelectedItems()));
 
         // Listen changes made by the editor, refresh data from backend
         editor.setChangeHandler(() -> {
@@ -78,10 +86,7 @@ public class TicketView extends VerticalLayout {
         if (StringUtils.isEmpty(filterText)) {
             grid.setItems(ticketRepository.findAll());
         } else {
-            //TODO
             grid.setItems(ticketRepository.findAll());
         }
     }
-
-
 }

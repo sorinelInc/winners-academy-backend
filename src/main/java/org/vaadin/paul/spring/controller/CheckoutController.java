@@ -22,7 +22,6 @@ public class CheckoutController {
             "cmzjbmn43wncwgf2",
             "5910517ee419c504a6af75cb1f522bda"
     );
-    ;
 
     private Status[] TRANSACTION_SUCCESS_STATUSES = new Status[]{
             Transaction.Status.AUTHORIZED,
@@ -33,11 +32,6 @@ public class CheckoutController {
             Transaction.Status.SETTLING,
             Transaction.Status.SUBMITTED_FOR_SETTLEMENT
     };
-
-    @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public String root(Model model) {
-        return "redirect:checkouts";
-    }
 
     @RequestMapping(value = "/checkouts", method = RequestMethod.GET)
     public String checkout(Model model) {
@@ -73,11 +67,11 @@ public class CheckoutController {
             Transaction transaction = result.getTransaction();
             return "redirect:checkouts/" + transaction.getId();
         } else {
-            StringBuilder errorString = new StringBuilder();
+            String errorString = "";
             for (ValidationError error : result.getErrors().getAllDeepValidationErrors()) {
-                errorString.append("Error: ").append(error.getCode()).append(": ").append(error.getMessage()).append("\n");
+                errorString += "Error: " + error.getCode() + ": " + error.getMessage() + "\n";
             }
-            redirectAttributes.addFlashAttribute("errorDetails", errorString.toString());
+            redirectAttributes.addFlashAttribute("errorDetails", errorString);
             return "redirect:checkouts";
         }
     }

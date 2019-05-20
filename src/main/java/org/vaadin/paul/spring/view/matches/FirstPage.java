@@ -1,24 +1,25 @@
-package org.vaadin.paul.spring.views.matches;
+package org.vaadin.paul.spring.view.matches;
 
-
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.spring.annotation.UIScope;
+import com.vaadin.flow.spring.annotation.VaadinSessionScope;
 import org.vaadin.paul.spring.model.Match;
 import org.vaadin.paul.spring.model.Ticket;
 import org.vaadin.paul.spring.repository.TicketRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-public class SecondPage extends VerticalLayout implements MatchPage {
+@VaadinSessionScope
+public class FirstPage extends VerticalLayout implements MatchPage {
 
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
 
-    public SecondPage(TicketRepository ticketRepository) {
+    public FirstPage(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
         init();
 
@@ -39,8 +40,11 @@ public class SecondPage extends VerticalLayout implements MatchPage {
 
     @Override
     public List<Match> getMatches() {
-        LocalDate yersterday = LocalDate.now().minusDays(1);
-        Ticket current = ticketRepository.findByDate(Date.valueOf(yersterday));
+        LocalDate today = LocalDate.now();
+        Ticket current = ticketRepository.findByDate(Date.valueOf(today));
+        if (current == null) {
+            return new ArrayList<>();
+        }
         return current.getMatchList();
     }
 }

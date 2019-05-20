@@ -1,10 +1,9 @@
-package org.vaadin.paul.spring.views.matches;
+package org.vaadin.paul.spring.view.matches;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import org.vaadin.paul.spring.model.Match;
 import org.vaadin.paul.spring.model.Result;
-import org.vaadin.paul.spring.repository.TicketRepository;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

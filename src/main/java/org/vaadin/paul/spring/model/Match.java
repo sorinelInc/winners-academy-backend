@@ -3,7 +3,7 @@ package org.vaadin.paul.spring.model;
 import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.util.Date;
 
 @Getter
 @Setter

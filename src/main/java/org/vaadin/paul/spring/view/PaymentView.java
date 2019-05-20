@@ -1,4 +1,4 @@
-package org.vaadin.paul.spring.views;
+package org.vaadin.paul.spring.view;
 
 import com.braintreegateway.*;
 import com.vaadin.flow.component.Text;

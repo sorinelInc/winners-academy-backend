@@ -3,20 +3,19 @@ package org.vaadin.paul.spring.controller;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.KeyNotifier;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.vaadin.paul.spring.dialog.EditTicketDialog;
 import org.vaadin.paul.spring.model.Match;
 import org.vaadin.paul.spring.model.Ticket;
 import org.vaadin.paul.spring.repository.TicketRepository;
 
-import java.time.LocalDate;
+import java.util.Set;
 
 @Controller
 public class TicketEditor extends VerticalLayout implements KeyNotifier {
@@ -25,28 +24,22 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
 
     private Ticket currentTicket;
 
-    TextField id = new TextField("Match Id");
-    TextField date = new TextField("Date");
-//    DatePicker datePicker = new DatePicker();
-    Grid<Match> matchGrid = new Grid<>(Match.class);
+    private Grid<Match> matchGrid = new Grid<>(Match.class);
 
-    TextField totalOdds = new TextField("Total Odds");
+    private Button addMatch = new Button("Add Match", VaadinIcon.PLUS.create());
+    private Button deleteMatch = new Button("Delete Match", VaadinIcon.TRASH.create());
+    private Button editMatch = new Button("Edit Match", VaadinIcon.EDIT.create());
+    private Button cancel = new Button("Cancel");
+    private HorizontalLayout actions = new HorizontalLayout(addMatch, editMatch, deleteMatch, cancel);
 
-
-    Button save = new Button("Save", VaadinIcon.CHECK.create());
-    Button cancel = new Button("Cancel");
-    Button delete = new Button("Delete", VaadinIcon.TRASH.create());
-    HorizontalLayout actions = new HorizontalLayout(save, cancel, delete);
-
-    Binder<Ticket> binder = new Binder<>(Ticket.class);
+    private Binder<Ticket> binder = new Binder<>(Ticket.class);
     private ChangeHandler changeHandler;
 
     @Autowired
     public TicketEditor(TicketRepository repository) {
         this.repository = repository;
-
-        add(id, matchGrid, totalOdds, matchGrid, actions);
-
+        matchGrid.removeColumnByKey("parentTicket");
+        add(matchGrid, actions);
         // bind using naming convention
 //        binder.forMemberField(date)
 //                .withConverter(str -> LocalDate.now(), date -> LocalDate.now())
@@ -60,25 +53,33 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
         // Configure and style components
         setSpacing(true);
 
-        save.getElement().getThemeList().add("primary");
-        delete.getElement().getThemeList().add("error");
+        addMatch.getElement().getThemeList().add("primary");
+        deleteMatch.getElement().getThemeList().add("error");
 
         addKeyPressListener(Key.ENTER, e -> save());
 
-        // wire action buttons to save, delete and reset
-        save.addClickListener(e -> save());
-        delete.addClickListener(e -> delete());
-        cancel.addClickListener(e -> editTicket(currentTicket));
+        EditTicketDialog editTicketDialog = new EditTicketDialog();
+
+        // wire action buttons to addMatch, deleteMatch and reset
+        addMatch.addClickListener(event -> save());
+        deleteMatch.addClickListener(event -> delete());
+        cancel.addClickListener(event -> cancel());
+        editMatch.addClickListener(event -> editTicketDialog.open());
+
         setVisible(false);
     }
 
-    void delete() {
+    private void delete() {
         repository.delete(currentTicket);
         changeHandler.onChange();
     }
 
-    void save() {
+    private void save() {
         repository.save(currentTicket);
+        changeHandler.onChange();
+    }
+
+    private void cancel() {
         changeHandler.onChange();
     }
 
@@ -112,12 +113,25 @@ public class TicketEditor extends VerticalLayout implements KeyNotifier {
         setVisible(true);
 
         // Focus first name initially
-        date.focus();
+//        date.focus();
     }
 
+    public void deleteTicket(Set<Ticket> ticketSet){
+        if (ticketSet.isEmpty()){
+            //TODO: popup
+        }
+        else {
+            Ticket currentTicket = ticketSet.iterator().next();
+            repository.delete(currentTicket);
+            changeHandler.onChange();
+        }
+    }
+
+
     public void setChangeHandler(ChangeHandler h) {
-        // ChangeHandler is notified when either save or delete
+        // ChangeHandler is notified when either addMatch or deleteMatch
         // is clicked
         changeHandler = h;
     }
+
 }

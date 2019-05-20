@@ -1,11 +1,10 @@
-package org.vaadin.paul.spring.views;
+package org.vaadin.paul.spring.view;
 
 import com.github.appreciated.app.layout.behaviour.Behaviour;
 import com.github.appreciated.app.layout.builder.AppLayoutBuilder;
 import com.github.appreciated.app.layout.component.menu.left.builder.LeftAppMenuBuilder;
 import com.github.appreciated.app.layout.component.menu.left.items.LeftNavigationItem;
 import com.github.appreciated.app.layout.router.AppLayoutRouterLayout;
-import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.icon.VaadinIcon;
 
@@ -21,7 +20,7 @@ public class MainView extends AppLayoutRouterLayout {
                         .add(new LeftNavigationItem("Daily Matches", VaadinIcon.WALLET.create(), DailyView.class))
                         .add(new LeftNavigationItem("VIP Matches", VaadinIcon.STAR.create(), VIPView.class))
                         .add(new LeftNavigationItem("Register", VaadinIcon.PLUS.create(), PaymentView.class))
-                        .add(new LeftNavigationItem("Contact", VaadinIcon.CONNECT.create(), DailyView.class))
+                        .add(new LeftNavigationItem("Contact", VaadinIcon.CONNECT.create(), ContactView.class))
                         .build())
                 .build());
     }

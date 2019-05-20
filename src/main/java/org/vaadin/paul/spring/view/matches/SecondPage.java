@@ -1,4 +1,5 @@
-package org.vaadin.paul.spring.views.matches;
+package org.vaadin.paul.spring.view.matches;
+
 
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -9,14 +10,13 @@ import org.vaadin.paul.spring.repository.TicketRepository;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
-public class FirstPage extends VerticalLayout implements MatchPage {
+public class SecondPage extends VerticalLayout implements MatchPage {
 
-    private final TicketRepository ticketRepository;
+    private TicketRepository ticketRepository;
 
-    public FirstPage(TicketRepository ticketRepository) {
+    public SecondPage(TicketRepository ticketRepository) {
         this.ticketRepository = ticketRepository;
         init();
 
@@ -37,11 +37,8 @@ public class FirstPage extends VerticalLayout implements MatchPage {
 
     @Override
     public List<Match> getMatches() {
-        LocalDate today = LocalDate.now();
-        Ticket current = ticketRepository.findByDate(Date.valueOf(today));
-        if (current == null) {
-            return new ArrayList<>();
-        }
+        LocalDate yersterday = LocalDate.now().minusDays(1);
+        Ticket current = ticketRepository.findByDate(Date.valueOf(yersterday));
         return current.getMatchList();
     }
 }

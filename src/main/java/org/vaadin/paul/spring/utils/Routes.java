@@ -9,4 +9,6 @@ public interface Routes {
     String TICKET = "tickets";
 
     String DAILY = "daily";
+
+    String CONTACT = "contact";
 }

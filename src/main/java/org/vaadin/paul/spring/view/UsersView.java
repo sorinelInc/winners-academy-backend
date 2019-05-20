@@ -1,4 +1,4 @@
-package org.vaadin.paul.spring.views;
+package org.vaadin.paul.spring.view;
 
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.PageTitle;

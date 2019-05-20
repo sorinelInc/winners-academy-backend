@@ -8,7 +8,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.vaadin.paul.spring.views.LoginView;
+import org.vaadin.paul.spring.view.LoginView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;

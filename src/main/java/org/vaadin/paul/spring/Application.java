@@ -9,7 +9,11 @@ import org.vaadin.paul.spring.model.Result;
 import org.vaadin.paul.spring.model.Ticket;
 import org.vaadin.paul.spring.repository.TicketRepository;
 
-import java.sql.Date;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Date;
 import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
@@ -26,10 +30,8 @@ public class Application {
     public CommandLineRunner loadData(TicketRepository repository) {
         return (args) -> {
 
-
-            Date today = Date.valueOf(LocalDate.now());
-            Date yesterday = Date.valueOf(LocalDate.now().minusDays(1));
-
+            Date today = Date.from(Instant.now());
+            Date yesterday = Date.from(Instant.now().minus(1, ChronoUnit.DAYS));
 
             Ticket todayTicket = Ticket.builder().date(today).build();
             Ticket yersterdayTicket = Ticket.builder().date(yesterday).build();
@@ -68,8 +70,6 @@ public class Application {
                             .odds(3.45D)
                             .build()
                     );
-
-
 
             yesterdayMatches.forEach(yersterdayTicket::addMatch);
             todayMatches.forEach(todayTicket::addMatch);
