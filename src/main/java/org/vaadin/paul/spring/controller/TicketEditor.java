@@ -7,6 +7,7 @@ import com.vaadin.flow.component.icon.VaadinIcon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.data.binder.Binder;
+import com.vaadin.flow.spring.annotation.UIScope;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.vaadin.paul.spring.dialog.EditMatchDialog;
@@ -17,6 +18,7 @@ import org.vaadin.paul.spring.repository.TicketRepository;
 import java.util.Set;
 
 @Controller
+@UIScope
 public class TicketEditor extends VerticalLayout implements KeyNotifier {
 
     private final TicketRepository repository;
