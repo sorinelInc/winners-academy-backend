@@ -49,8 +49,8 @@ public class TicketView extends VerticalLayout {
         HorizontalLayout actions = new HorizontalLayout(filter, addNewBtn, deleteNewBtn);
         add(actions, grid, editor);
 
-        grid.setHeight("300px");
-        grid.setColumns("ticketId", "date", "totalOdds");
+//        grid.setHeight("300px");
+        grid.setColumns("ticketId", "date", "totalOdds", "status");
         grid.getColumnByKey("ticketId").setWidth("50px").setFlexGrow(0);
 
         filter.setPlaceholder("Filter ticket date");
