@@ -32,17 +32,10 @@ public class TicketController {
     }
 
     @GetMapping("/ticket")
-    public ResponseEntity<Ticket> getTicketByDate(
-            @RequestParam(name = "date", required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+    public ResponseEntity<Ticket> getTicketByDate(@RequestParam(name = "ticketDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
         Ticket result = ticketRepository.findByDate(date);
         return ResponseEntity.ok(result);
     }
 
-//    @GetMapping("/ticket")
-//    public ResponseEntity<Ticket> getTicketById(
-//            @RequestParam(name = "id") Long ticketId) {
-//        Ticket result = ticketRepository.findById(ticketId).orElse(null);
-//        return ResponseEntity.ok(result);
-//    }
 
 }
