@@ -1,5 +1,6 @@
 package com.winnersacademy.entity;
 
+import com.winnersacademy.model.TicketType;
 import com.winnersacademy.model.Result;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -13,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -42,6 +42,10 @@ public class Ticket {
     @Builder.Default
     @NotFound(action = NotFoundAction.IGNORE)
     private List<Match> matchList = new ArrayList<>();
+
+    @Column
+    @Enumerated(EnumType.STRING)
+    private TicketType ticketType;
 
     public void addMatch(Match newMatch) {
         matchList.add(newMatch);

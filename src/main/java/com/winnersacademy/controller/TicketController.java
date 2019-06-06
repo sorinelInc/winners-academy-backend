@@ -1,6 +1,7 @@
 package com.winnersacademy.controller;
 
 import com.winnersacademy.entity.Ticket;
+import com.winnersacademy.model.TicketType;
 import com.winnersacademy.repository.TicketRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,7 +18,6 @@ import java.util.List;
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 public class TicketController {
 
-
     private final TicketRepository ticketRepository;
 
     @Autowired
@@ -25,15 +25,27 @@ public class TicketController {
         this.ticketRepository = ticketRepository;
     }
 
-    @GetMapping("/tickets")
-    public ResponseEntity<List<Ticket>> getTickets() {
-        List<Ticket> result = ticketRepository.findAll();
+    @GetMapping("/tickets/daily")
+    public ResponseEntity<List<Ticket>> getDailyTickets() {
+        List<Ticket> result = ticketRepository.findAllByTicketType(TicketType.FREE);
         return ResponseEntity.ok(result);
     }
 
-    @GetMapping("/ticket")
+    @GetMapping("/ticket/daily")
+    public ResponseEntity<Ticket> getDailyTicketByDate(@RequestParam(name = "ticketDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        Ticket result = ticketRepository.findByDateAndTicketType(date, TicketType.FREE);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/tickets/vip")
+    public ResponseEntity<List<Ticket>> getVipTickets() {
+        List<Ticket> result = ticketRepository.findAllByTicketType(TicketType.VIP);
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping("/ticket/vip")
     public ResponseEntity<Ticket> getTicketByDate(@RequestParam(name = "ticketDate") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        Ticket result = ticketRepository.findByDate(date);
+        Ticket result = ticketRepository.findByDateAndTicketType(date, TicketType.VIP);
         return ResponseEntity.ok(result);
     }
 
