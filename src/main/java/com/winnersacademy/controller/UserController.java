@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public ResponseEntity<User> createUser(@RequestParam User newUser) {
+    public ResponseEntity<User> createUser(@RequestBody User newUser) {
         User shouldNotFind = userRepository.findByEmail(newUser.getEmail());
         if (shouldNotFind != null) {
             return new ResponseEntity<>(shouldNotFind, HttpStatus.CONFLICT);
@@ -53,7 +53,7 @@ public class UserController {
     }
 
     @PutMapping("/user/{id}")
-    public ResponseEntity<User> updateUser(@PathVariable(name = "id") Long userId, @RequestParam User toUpdate) {
+    public ResponseEntity<User> updateUser(@PathVariable(name = "id") Long userId, @RequestBody User toUpdate) {
         User existing = userRepository.findById(userId).orElse(null);
         if (existing == null) {
             return ResponseEntity.notFound().build();

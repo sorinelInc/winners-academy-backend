@@ -100,6 +100,16 @@ public class Application {
                     .build();
 
 
+            for (int i = 0; i < 10; i++){
+                User inner = User.builder()
+                        .name("vip_user" + i)
+                        .email("vip@yahoo.com" + i)
+                        .password("vip")
+                        .type(UserType.VIP)
+                        .build();
+                userRepository.save(inner);
+            }
+
             User vipUser = User.builder()
                     .name("vip_user")
                     .email("vip@yahoo.com")
