@@ -117,9 +117,18 @@ public class Application {
                     .type(UserType.VIP)
                     .build();
 
+
+            User testUser = User.builder()
+                    .name("test")
+                    .email("test@yahoo.com")
+                    .password("{noop}testing")
+                    .type(UserType.ADMIN)
+                    .build();
+
             userRepository.save(admin);
             userRepository.save(normalUser);
             userRepository.save(vipUser);
+            userRepository.save(testUser);
 
         };
     }

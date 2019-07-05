@@ -1,6 +1,7 @@
 package com.winnersacademy.controller;
 
 import com.winnersacademy.entity.User;
+import com.winnersacademy.model.UserType;
 import com.winnersacademy.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.security.Principal;
 
 @RestController
 @Slf4j
@@ -27,10 +28,10 @@ public class UserController {
 
     @GetMapping("users")
     public ResponseEntity<Page<User>> getAllUsers(@RequestParam(defaultValue = "0", name = "page") Integer pageNumber,
-                                                  @RequestParam(defaultValue = "10", name = "size") Integer size ){
+                                                  @RequestParam(defaultValue = "10", name = "size") Integer size) {
         Pageable pageable = PageRequest.of(pageNumber, size);
         Page<User> page = userRepository.findAll(pageable);
-        return  ResponseEntity.ok(page);
+        return ResponseEntity.ok(page);
     }
 
     @GetMapping("/user/{id}")
@@ -48,6 +49,7 @@ public class UserController {
         if (shouldNotFind != null) {
             return new ResponseEntity<>(shouldNotFind, HttpStatus.CONFLICT);
         }
+        newUser.setType(UserType.NORMAL);
         User persisted = userRepository.save(newUser);
         return ResponseEntity.ok(persisted);
     }
@@ -75,5 +77,12 @@ public class UserController {
         log.info("Deleting user:" + existing);
         userRepository.delete(existing);
         return ResponseEntity.ok().build();
+    }
+
+    @CrossOrigin
+    @GetMapping("/login/account")
+    public Principal user(Principal principal) {
+        log.info("user logged " + principal);
+        return principal;
     }
 }

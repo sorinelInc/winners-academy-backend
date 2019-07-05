@@ -10,4 +10,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
 
     Page<User> findAll(Pageable pageable);
+
+    User findByName(String username);
 }
