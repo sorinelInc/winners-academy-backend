@@ -1,5 +1,6 @@
 package com.winnersacademy.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.winnersacademy.entity.User;
 import com.winnersacademy.model.UserType;
 import com.winnersacademy.repository.UserRepository;
@@ -20,10 +21,12 @@ import java.security.Principal;
 public class UserController {
 
     private final UserRepository userRepository;
+    private final ObjectMapper objectMapper;
 
     @Autowired
-    public UserController(UserRepository userRepository) {
+    public UserController(UserRepository userRepository, ObjectMapper objectMapper) {
         this.userRepository = userRepository;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping("users")
