@@ -1,6 +1,7 @@
 package com.winnersacademy.services;
 
 
+import com.winnersacademy.entity.User;
 import com.winnersacademy.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,7 +21,11 @@ public class AppUserDetailsService implements UserDetailsService {
 
 
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User found = userRepository.findByName(username);
+        if (found == null) {
+            throw new UsernameNotFoundException(username);
+        }
+        return found;
     }
 }
